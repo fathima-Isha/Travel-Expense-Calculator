@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Travel Expense Calculator</title>
+
+    <style>
+    body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.box {
+    width: 380px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+input:disabled {
+    background: rgba(255,255,255,0.4);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: white;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+#result {
+    background: rgba(255,255,255,0.2);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h2>Travel Expense Calculator</h2>
+
+    
+    <label>Select Vehicle:</label>
+    <select id="vehicle">
+        <option value="16">Car </option>
+        <option value="60">Bike </option>
+    </select>
+
+    
+    <label>Starting Point:</label>
+    <input type="text" id="start">
+
+    
+    <label>Ending Point:</label>
+    <input type="text" id="end">
+
+    
+    <label>Distance (KM):</label>
+    <input type="number" id="distance" disabled>
+
+    
+    <button onclick="generateDistance()">Generate Distance</button>
+
+    
+    <label>Petrol Price (per Liter):</label>
+    <input type="number" id="price">
+
+    
+    <button onclick="calculate()">Calculate Total</button>
+
+   
+    <h3 id="result"></h3>
+
+</div>
+
+<script>
+
+function generateDistance() {
+    
+    var randomKM = Math.floor(Math.random() * 25) + 5;
+    document.getElementById("distance").value = randomKM;
+}
+
+function calculate() {
+
+    var mileage = Number(document.getElementById("vehicle").value);
+    var start = document.getElementById("start").value;
+    var end = document.getElementById("end").value;
+    var distance = Number(document.getElementById("distance").value);
+    var price = Number(document.getElementById("price").value);
+
+    if (!start || !end || distance <= 0 || price <= 0) {
+        document.getElementById("result").innerHTML = "Please fill all fields correctly.";
+        return;
+    }
+
+    var fuelNeeded = distance / mileage;
+    console.log("Distance: " + distance + " KM");
+    console.log("Mileage: " + mileage + " KM/L");
+    console.log("Fuel Needed: " + fuelNeeded);
+    var totalCost = fuelNeeded * price;
+    console.log("Price per Liter: ₹ " + price);
+    console.log("Total Petrol Cost: ₹ " + totalCost);
+
+    document.getElementById("result").innerHTML =
+        "From: " + start + "<br>" +
+        "To: " + end + "<br><br>" +
+        "Distance: " + distance + " KM<br>" +
+        "Fuel Needed: " + fuelNeeded.toFixed(2) + " Liters<br>" +
+        "Total Petrol Cost: ₹ " + totalCost.toFixed(2);
+}
+
+</script>
+
+</body>
+</html>
